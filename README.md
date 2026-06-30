@@ -16,7 +16,6 @@ Each subject's BVP signal is provided as a sequence of `.npy` chunks (160 sample
 ## Repository Structure
 
 ```
-.
 ├── hr_estimation.py          # Core pipeline: loading, windowing, peak detection, HR estimation
 ├── hr_analysis_export.py     # CSV export + visualization dashboard
 ├── GT_ref/                   # Input directory containing *_label*.npy files (not included)
