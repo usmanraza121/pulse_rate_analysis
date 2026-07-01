@@ -1,3 +1,5 @@
+from HR_with_diff_sample_lenghts import export_length_results_to_csv, plot_length_dashboard, run_signal_length_analysis
+
 from hr_estimation import (
     load_gt_npy_files,
     concatenate_subject_signal,
@@ -24,3 +26,20 @@ print_summary_table(results)
 df = export_results_to_csv(results, "hr_results.csv")
 plot_dashboard(df)
 flag_noisy_subjects(df, std_threshold=10)
+
+
+# ===============HR WITH DIFFERENT SIGNAL LENGTHS========================
+
+# Assumes subject_signals already loaded from hr_estimation.py pipeline:
+subject_chunks  = load_gt_npy_files(GT_DIR)
+subject_signals = concatenate_subject_signal(subject_chunks)
+
+SIGNAL_LENGTHS = [160, 320, 480, 1920]   # samples (5.3s, 10.7s, 16s, 64s)
+WINDOW_SIZES   = [3, 4, 5]               # seconds
+
+length_results = run_signal_length_analysis(subject_signals,
+                                              signal_lengths=SIGNAL_LENGTHS,
+                                              window_sizes_sec=WINDOW_SIZES)
+
+df_length = export_length_results_to_csv(length_results, "hr_length_results.csv")
+plot_length_dashboard(df_length)
